@@ -1,0 +1,49 @@
+
+---
+
+## GitHub Secrets
+
+Go to:
+**Repo → Settings → Secrets and variables → Actions → New repository secret**
+
+Add these secrets:
+
+### Telegram
+- `TELEGRAM_TOKEN` = your Telegram bot token (from BotFather)
+- `TELEGRAM_CHAT_ID` = your channel/group/user chat id
+
+### Website API
+- `SITE_API_URL` = `https://exmple.com/api/new-article.php`
+- `SITE_API_TOKEN` = optional token (if your API requires auth).  
+  If not needed, you can still create it empty or remove from workflow.
+
+---
+
+## Website API contract
+
+The bot sends a `POST multipart/form-data` to `SITE_API_URL`:
+
+### POST fields:
+- `title` (string)
+- `description` (string)
+- `time` (string) e.g. `2025-12-28T15:42:11.123456+01:00`
+- `image` (file) `article.webp` with `Content-Type: image/webp`
+
+### Optional header:
+- `Authorization: Bearer <SITE_API_TOKEN>`
+
+---
+
+## Run locally
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+export TELEGRAM_TOKEN="..."
+export TELEGRAM_CHAT_ID="..."
+export SITE_API_URL="https://exmple.com/api/new-article.php"
+export SITE_API_TOKEN="..."  # optional
+
+python bot.py
